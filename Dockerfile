@@ -23,7 +23,6 @@ RUN {	systemctl enable haproxy crond; \
 	chmod +rx /docker-entrypoint.sh; \
 	chmod 700 /usr/local/sbin/certbot-{issue,ocsp,renew}; \
 	mkdir -p /etc/letsencrypt/live; \
-	sed -i 's/#ForwardToConsole=no/ForwardToConsole=yes/g' /etc/systemd/journald.conf; \
 }
 
 HEALTHCHECK CMD systemctl -q is-active haproxy || exit 1
