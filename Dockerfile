@@ -2,7 +2,7 @@ FROM    joramk/fc26-base
 MAINTAINER joramk@gmail.com
 ENV     container docker
 
-LABEL   name="Fedora - HAproxy stable with Lets Encrypt" \
+LABEL   name="Fedora - HAproxy 1.7.3 with Lets Encrypt" \
         vendor="https://github.com/joramk/fc26-haproxy" \
         license="none" \
         build-date="20180211" \
@@ -10,7 +10,7 @@ LABEL   name="Fedora - HAproxy stable with Lets Encrypt" \
 	issues="https://github.com/joramk/fc26-haproxy/issues"
 
 RUN {	yum update -y; \
-	yum install haproxy certbot cronie procps-ng iputils socat yum-cron -y; \
+        yum install haproxy-1.7.3 certbot cronie procps-ng iputils socat yum-cron -y; \
         yum clean all && rm -rf /var/cache/yum; \
 }
 
