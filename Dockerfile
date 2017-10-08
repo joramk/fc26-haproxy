@@ -21,7 +21,7 @@ RUN {	(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == syst
 }
 
 RUN {	yum update -y; \
-        yum install haproxy certbot cronie procps-ng iputils socat yum-cron -y; \
+        yum install haproxy-1.7.3 certbot cronie procps-ng iputils socat yum-cron -y; \
         yum clean all && rm -rf /var/cache/yum; \
 }
 
