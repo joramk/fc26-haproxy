@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ -z "$HAPROXY_LETSENCRYPT" ]; then
+        echo Lets Encrypt is disabled.
+        exit 2
+fi
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+	echo Usage: certbot-issue domain.tld email@address
+	exit 2
+fi
+
+systemctl stop haproxy
+certbot certonly --non-interactive --agree-tos --standalone --domain $1 --email $2
+for dir in $(ls -d /etc/letsencrypt/live/*) ; do cat $dir/privkey.pem $dir/fullchain.pem > $dir/fullkeychain.pem ; done
+systemctl start haproxy
+sleep 3
+certbot-ocsp
+
