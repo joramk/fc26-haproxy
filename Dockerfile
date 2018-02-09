@@ -2,7 +2,7 @@ FROM    joramk/fc26-base
 MAINTAINER joramk@gmail.com
 ENV     container docker
 
-LABEL   name="Fedora - HAproxy stable with Lets Encrypt" \
+LABEL   name="Fedora - HAproxy 1.7.9 with Lets Encrypt" \
         vendor="https://github.com/joramk/fc26-haproxy" \
         license="none" \
         build-date="20180211" \
