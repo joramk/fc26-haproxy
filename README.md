@@ -1,5 +1,9 @@
-Tags
+Fedora 26 HAProxy docker image with Let´s Encrypt
 ===
+A Fedora 26 based HAProxy docker image with Let´s Encrypt support in different version flavours.
+
+Tags
+==
 Tag | Description
 ---|---
 latest | Installs HAProxy v1.7.8 (stable)
@@ -8,7 +12,7 @@ latest | Installs HAProxy v1.7.8 (stable)
 1.7.3 | Installs HAProxy v1.7.3 (old)   
 
 Features
-===
+==
 * Self update through Fedora package management
 * Latest Fedora with full systemd
 * Integrated LetsEncrypt with automatic issueing and update of certificates 
@@ -29,7 +33,7 @@ docker run -ti -p 80:80 -p 443:443 \
 ~~~
 
 Docker swarm
-===
+==
     docker service create -d --log-driver=journald -p 80:80 -p 443:443 --replicas 2 \
         --mount type=tmpfs,dst=/run --mount type=tmpfs,dst=/tmp \
         --mount type=bind,src=/sys/fs/cgroup,dst=/sys/fs/cgroup,ro \
@@ -42,7 +46,7 @@ Docker swarm
         joramk/fc26-haproxy:latest
 
 My own configuration
-===
+==
 ~~~
 docker run -d \
     --tmpfs /run --tmpfs /tmp \
@@ -66,10 +70,10 @@ docker run -d \
 ~~~
 
 Issue and update certificates manually
-===
+==
     docker exec -ti <container> certbot-issue <domain.tld> <email>
     docker exec -ti <container> certbot-renew
 
 Found a bug?
-===
+==
 Please report issues on GitHub: https://github.com/joramk/fedora-haproxy/issues
