@@ -9,7 +9,8 @@ LABEL   name="Fedora - HAproxy with Lets Encrypt" \
         maintainer="joramk" \
 	issues="https://github.com/joramk/fc26-haproxy/issues"
 
-RUN {   yum install haproxy-1.7.9 certbot cronie procps-ng iputils socat yum-cron -y; \
+RUN {   yum update -y; \
+	yum install haproxy-1.7.9 certbot cronie procps-ng iputils socat yum-cron -y; \
         yum clean all && rm -rf /var/cache/yum; \
 }
 
