@@ -6,7 +6,7 @@ Tags
 ==
 Tag | Description
 ---|---
-latest | Installs HAProxy v1.7.8 (stable)
+**latest** | **Installs HAProxy v1.7.8 (stable)**
 1.7.9 | Installs HAProxy v1.7.9 (testing)   
 1.7.8 | Installs HAProxy v1.7.8 (stable)  
 1.7.3 | Installs HAProxy v1.7.3 (old)   
