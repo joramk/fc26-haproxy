@@ -19,6 +19,17 @@ setup() {
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
 		echo "45 4 * * 0 root /usr/local/sbin/certbot-renew >/dev/null" >/etc/cron.d/certbot-renew
+		unset IFS
+		args=()
+		for var in $(compgen -e); do
+		        if [[ "$var" =~ LETSENCRYPT_DOMAIN_.* ]]; then
+        		        domains+=( "${!var}" )
+		        fi
+		done
+		for entry in "${domains[@]}"; do
+        		ary=(${entry//,/ })
+        		/usr/local/sbin/certbot-issue ${ary[@]}
+		done
         fi	
 }
 
