@@ -4,3 +4,4 @@ if [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
 else
         exit 2
 fi
+
