@@ -9,3 +9,4 @@ if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" && ! -z "$HAPROXY_LETSENCRYPT" ]; then
 	sleep 3
 	/usr/local/sbin/certbot-ocsp
 fi
+
