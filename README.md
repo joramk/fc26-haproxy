@@ -6,7 +6,7 @@ Tags
 ==
 Tag | Description
 ---|---
-latest | **Installs HAProxy v1.7.9 (stable)
+latest | Installs HAProxy v1.7.9 (stable)
 **1.7.9** | **Installs HAProxy v1.7.9 (stable)**   
 1.7.3 | Installs HAProxy v1.7.3 (old)   
 
@@ -76,4 +76,3 @@ Issue and update certificates manually
 Found a bug?
 ==
 Please report issues on GitHub: https://github.com/joramk/fc26-haproxy/issues
-
