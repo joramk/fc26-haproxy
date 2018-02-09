@@ -5,7 +5,7 @@ ENV     container docker
 LABEL   name="Fedora - HAproxy 1.7.3 with Lets Encrypt" \
         vendor="https://github.com/joramk/fc26-haproxy" \
         license="none" \
-        build-date="20171008" \
+        build-date="20180209" \
         maintainer="joramk" \
 	issues="https://github.com/joramk/fc26-haproxy/issues"
 
