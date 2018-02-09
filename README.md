@@ -75,4 +75,4 @@ Issue and update certificates manually
 
 Found a bug?
 ==
-Please report issues on GitHub: https://github.com/joramk/fedora-haproxy/issues
+Please report issues on GitHub: https://github.com/joramk/fc26-haproxy/issues
