@@ -5,4 +5,4 @@ do
 done
 systemctl restart haproxy
 sleep 3
-certbot-ocsp
+/usr/local/sbin/certbot-ocsp
