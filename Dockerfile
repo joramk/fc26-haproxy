@@ -14,8 +14,8 @@ RUN {	yum update -y; \
         yum clean all && rm -rf /var/cache/yum; \
 }
 
-COPY    ./docker-entrypoint.sh /
-COPY    ./certbot-issue ./certbot-ocsp ./certbot-renew /usr/local/sbin/
+COPY    docker-entrypoint.sh /
+COPY    certbot-* /usr/local/sbin/
 
 RUN {	systemctl enable haproxy crond; \
 	systemctl disable auditd; \
