@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
-	/usr/bin/certbot renew --pre-hook "systemctl stop haproxy" --post-hook "/usr/local/sbin/cerbot-posthook"
+	/usr/bin/certbot renew --pre-hook "systemctl stop haproxy" --post-hook "/usr/local/sbin/certbot-posthook"
 else
 	exit 2
 fi
