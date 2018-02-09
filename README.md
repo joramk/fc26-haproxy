@@ -7,7 +7,7 @@ Tags
 Tag | Description
 ---|---
 latest | Installs HAProxy v1.7.8 (stable)
-1.7.9 | Installs HAProxy v1.7.9 (testing)   
+**1.7.9** | **Installs HAProxy v1.7.9 (testing)**   
 1.7.8 | Installs HAProxy v1.7.8 (stable)  
 1.7.3 | Installs HAProxy v1.7.3 (old)   
 
@@ -29,7 +29,7 @@ docker run -ti -p 80:80 -p 443:443 \
     -e "HAPROXY_OCSP=1" \
     -e "LETSENCRYPT_DOMAIN_1=www.example.org,someone@example.org"
     -e "LETSENCRYPT_DOMAIN_2=www.example.com,anyone@example.com"
-    joramk/fc26-haproxy:latest
+    joramk/fc26-haproxy:1.7.9
 ~~~
 
 Docker swarm
@@ -43,7 +43,7 @@ Docker swarm
         -e "HAPROXY_OCSP=1" \
         -e "LETSENCRYPT_DOMAIN_1=www.example.org,someone@example.org"
         -e "LETSENCRYPT_DOMAIN_2=www.example.com,anyone@example.com"
-        joramk/fc26-haproxy:latest
+        joramk/fc26-haproxy:1.7.9
 
 My own configuration
 ==
@@ -66,7 +66,7 @@ docker run -d \
     -e "LETSENCRYPT_DOMAIN_1=jira.lonet.org,joramk@gmail.com"
     -e "LETSENCRYPT_DOMAIN_2=confluence.lonet.org,joramk@gmail.com"
     -e "LETSENCRYPT_DOMAIN_3=git.lonet.org,joramk@gmail.com"
-    joramk/fc26-haproxy:latest
+    joramk/fc26-haproxy:1.7.9
 ~~~
 
 Issue and update certificates manually
