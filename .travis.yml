@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-- docker pull joramk/fc26-haproxy:latest
+- docker build -t joramk/fc26-haproxy:latest joramk/fc26-haproxy
 - docker run -d joramk/fc26-haproxy:latest
 
 script:
