@@ -47,6 +47,8 @@ docker run joramk/fc26-haproxy:latest
 ### Plain HAProxy container
 ~~~
 docker run -d -p 80:80 -p 443:443 \
+    --tmpfs /run --tmpfs /tmp \
+    -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -e "TIMEZONE=Europe/Berlin" \
     joramk/fc26-haproxy:latest
 ~~~
@@ -54,6 +56,8 @@ docker run -d -p 80:80 -p 443:443 \
 ### HAProxy container with persistent volumes
 ~~~
 docker run -d -p 80:80 -p 443:443 \
+    --tmpfs /run --tmpfs /tmp \
+    -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -v /etc/haproxy:/etc/haproxy:ro \
     -v /etc/letsencrypt:/etc/letsencrypt \
     -e "TIMEZONE=Europe/Berlin" \
