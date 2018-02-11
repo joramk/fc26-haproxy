@@ -6,7 +6,6 @@ services:
 before_install:
 - docker pull joramk/fc26-haproxy:latest
 - docker run -d joramk/fc26-haproxy:latest
-- docker ps
 
 script:
-- docker ps -a
+- while sleep 5; do if [ `docker ps -a | grep '(unhealthy)' | wc -l` != "0" ]; then exit 1; fi ; if [ `docker ps -a | grep '(healthy)' | wc -l` != "0" ]; then exit 0; fi ; done
