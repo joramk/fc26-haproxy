@@ -78,6 +78,20 @@ docker run -d \
     joramk/fc26-haproxy:latest
 ~~~
 
+Required haproxy.cfg
+==
+The following configuration options are required in order for the LetsEncrypt cronjobs to work.
+
+    global
+        stats socket /var/run/haproxy.admin level admin
+
+    frontend unsecured
+        acl         acme_redirect path_beg -i /.well-known/acme-challenge/
+        use_backend certbot if acme_redirect
+
+    backend certbot
+        server standalone 127.0.0.1:8888
+
 Issue and update certificates manually
 ==
     docker exec -ti <container> certbot-issue <domain.tld> <email>
