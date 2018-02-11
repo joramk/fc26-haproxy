@@ -1,9 +1,4 @@
 #!/bin/bash
-if [ -z "$HAPROXY_LETSENCRYPT" ]; then
-        echo Lets Encrypt is disabled.
-        exit 2
-fi
-
 if [ -z "$1" ] || [ -z "$2" ]; then
 	echo Usage: certbot-issue domain.tld email@address
 	exit 2
