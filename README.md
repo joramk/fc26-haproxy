@@ -1,4 +1,4 @@
-Fedora 26 HAProxy docker image with Let´s Encrypt[![Build Status](https://travis-ci.org/joramk/fc26-haproxy.svg?branch=haproxy-1.7.9)](https://travis-ci.org/joramk/fc26-haproxy)
+Fedora 26 HAProxy docker image with Let´s Encrypt [![Build Status](https://travis-ci.org/joramk/fc26-haproxy.svg?branch=haproxy-1.7.9)](https://travis-ci.org/joramk/fc26-haproxy)
 ===
 A Fedora 26 based HAProxy docker image with Let´s Encrypt support in different version flavours.
 
