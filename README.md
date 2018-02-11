@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/joramk/fc26-haproxy.svg?branch=master)](https://travis-ci.org/joramk/fc26-haproxy)
+
 Fedora 26 HAProxy docker image with Let´s Encrypt
 ===
 A Fedora 26 based HAProxy docker image with Let´s Encrypt support in different version flavours.
@@ -9,6 +11,16 @@ Tag | Description
 **latest** | **Installs HAProxy v1.7.9 (stable)**
 1.7.9 | Installs HAProxy v1.7.9 (stable)   
 1.7.3 | Installs HAProxy v1.7.3 (old)   
+
+Environment variables
+===
+Variable | Description
+---|---
+TIMEZONE | Sets the container timezone, i.e. `-e TIMEZONE=Europe/Berlin` _string_
+SELFUPDATE | Activates the Fedora base system package selfupdate _boolean_
+HAPROXY_LETSENCRYPT | Activates the LetsEncrypt components and installs the renewal cronjob _boolean_
+HAPROXY_LETSENCRYPT_OCSP | Activates OCSP stapling and the daily update cronjob _boolean_
+LETSENCRYPT\_DOMAIN\_\* | Issues a certificate from LetsEncrypt, i.e. `-e LETSENCRYPT_DOMAIN_1=www.example.org,mail@example.org`
 
 Features
 ==
