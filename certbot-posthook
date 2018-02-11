@@ -1,8 +1,11 @@
 #!/bin/bash
-for dir in $(ls -d /etc/letsencrypt/live/*)
-do
+for dir in $(ls -d /etc/letsencrypt/live/*); do
         cat $dir/privkey.pem $dir/fullchain.pem > $dir/fullkeychain.pem
 done
-systemctl restart haproxy
-sleep 3
-/usr/local/sbin/certbot-ocsp
+
+systemctl reload haproxy
+
+if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" && ! -z "$HAPROXY_LETSENCRYPT" ]; then
+	sleep 3
+	/usr/local/sbin/certbot-ocsp
+fi
