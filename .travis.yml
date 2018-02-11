@@ -8,4 +8,4 @@ before_install:
 - docker run -d joramk/fc26-haproxy:latest
 
 script:
-- while sleep 2; do docker ps -a | grep ago ; if [ `docker ps -a | grep '(unhealthy)' | wc -l` != "0" ]; then exit 1; fi ; if [ `docker ps -a | grep '(healthy)' | wc -l` != "0" ]; then exit 0; fi ; if [ `docker ps -a | grep '(starting)' | wc -l` == "0" ]; then exit 1; fi ; done
+- while sleep 5; do docker ps -a | grep ago ; if [ `docker ps -a | grep '(unhealthy)' | wc -l` != "0" ]; then exit 1; fi ; if [ `docker ps -a | grep '(healthy)' | wc -l` != "0" ]; then exit 0; fi ; if [ `docker ps -a | grep '(starting)' | wc -l` == "0" ]; then exit 1; fi ; done
