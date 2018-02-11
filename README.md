@@ -39,12 +39,12 @@ backend certbot
 ## First run configuration
 You can start a container in several ways. You should have a persistent read-only volume for `/etc/haproxy` and a persistent writable volume for `/etc/letsencrypt` when using LetsEncrypt certificates. Here are some examples including my personal run configuration.
 
-### Quickstart on console
+### Docker run - Quickstart
 ~~~
 docker run joramk/fc26-haproxy:latest
 ~~~
 
-### Plain HAProxy container
+### Docker run
 ~~~
 docker run -d -p 80:80 -p 443:443 \
     --tmpfs /run --tmpfs /tmp \
@@ -53,7 +53,7 @@ docker run -d -p 80:80 -p 443:443 \
     joramk/fc26-haproxy:latest
 ~~~
 
-### HAProxy container with persistent volumes
+### Docker run with persistent volumes
 ~~~
 docker run -d -p 80:80 -p 443:443 \
     --tmpfs /run --tmpfs /tmp \
@@ -64,7 +64,7 @@ docker run -d -p 80:80 -p 443:443 \
     joramk/fc26-haproxy:latest
 ~~~
 
-### Docker run on SELinux hosts with all options enabled
+### Docker run with all options enabled
 ~~~
 docker run -d -p 80:80 -p 443:443 \
     --tmpfs /run --tmpfs /tmp \
@@ -92,7 +92,7 @@ docker service create -d --log-driver=journald -p 80:80 -p 443:443 --replicas 2 
     joramk/fc26-haproxy:latest
 ~~~
 
-### My own configuration
+### Docker run - My personal configuration
 ~~~
 docker run -d \
     --tmpfs /run --tmpfs /tmp \
