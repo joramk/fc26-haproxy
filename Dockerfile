@@ -5,16 +5,17 @@ ENV     container docker
 LABEL   name="Fedora - HAproxy stable with Lets Encrypt" \
         vendor="https://github.com/joramk/fc26-haproxy" \
         license="none" \
-        build-date="20171008" \
+        build-date="20180209" \
         maintainer="joramk" \
 	issues="https://github.com/joramk/fc26-haproxy/issues"
 
-RUN {	yum install haproxy certbot cronie procps-ng iputils socat yum-cron -y; \
+RUN {	yum update -y; \
+	yum install haproxy certbot cronie procps-ng iputils socat yum-cron -y; \
         yum clean all && rm -rf /var/cache/yum; \
 }
 
-COPY    ./docker-entrypoint.sh /
-COPY    ./certbot-issue ./certbot-ocsp ./certbot-renew /usr/local/sbin/
+COPY    docker-entrypoint.sh /
+COPY    certbot-* /usr/local/sbin/
 
 RUN {	systemctl enable haproxy crond; \
 	systemctl disable auditd; \
