@@ -1,5 +1,5 @@
 # Fedora 26 HAProxy docker image with Let´s Encrypt [![Build Status](https://travis-ci.org/joramk/fc26-haproxy.svg?branch=master)](https://travis-ci.org/joramk/fc26-haproxy)
-A Fedora 26 based HAProxy docker image with Let´s Encrypt support in different version flavours.
+A Fedora 26 based HAProxy docker image with Let´s Encrypt support in different version flavours. 
 
 ## Tags
 Tag | Description
@@ -9,18 +9,18 @@ Tag | Description
 1.7.3 | Installs HAProxy v1.7.3 (old)   
 
 ## Features
-* Self update through Fedora package management
-* Latest Fedora with full systemd
-* Integrated LetsEncrypt with automatic issueing and update of certificates 
+* Automatich self update through the Fedora package management
+* Latest Fedora 26 base system with full systemd support
+* Integrated LetsEncrypt Certbot with automatic certificate issues and updates 
 
 ### Environment variables
 Variable | Description
 ---|---
-TIMEZONE | Sets the container timezone, i.e. `-e TIMEZONE=Europe/Berlin` _string_
+TIMEZONE | Sets the container timezone, i.e. `-e "TIMEZONE=Europe/Berlin"` _string_
 SELFUPDATE | Activates the Fedora base system package selfupdate _boolean_
 HAPROXY_LETSENCRYPT | Activates the LetsEncrypt components and installs the renewal cronjob _boolean_
 HAPROXY_LETSENCRYPT_OCSP | Activates OCSP stapling and the daily update cronjob _boolean_
-LETSENCRYPT\_DOMAIN\_\* | Issues a certificate from LetsEncrypt, i.e. `-e LETSENCRYPT_DOMAIN_1=www.example.org,mail@example.org`
+LETSENCRYPT\_DOMAIN\_\* | Issues a certificate from LetsEncrypt, i.e. `-e "LETSENCRYPT_DOMAIN_1=www.example.org,mail@example.org"`
 
 ### Required haproxy.cfg
 The following configuration options are required for the LetsEncrypt scripts and OCSP cronjob.
@@ -37,11 +37,32 @@ backend certbot
 ~~~
 
 ## First run configuration
-You can start a container in serveral ways. Here are some examples. You should have a persistent read-only volume for `/etc/haproxy` and a persistent writable volume for `/etc/letsencrypt` when using LetsEncrypt certificates.
+You can start a container in several ways. You should have a persistent read-only volume for `/etc/haproxy` and a persistent writable volume for `/etc/letsencrypt` when using LetsEncrypt certificates. Here are some examples including my personal run configuration.
 
-### Docker run
+### Quickstart on console
 ~~~
-docker run -ti -p 80:80 -p 443:443 \
+docker run joramk/fc26-haproxy:latest
+~~~
+
+### Plain HAProxy container
+~~~
+docker run -d -p 80:80 -p 443:443 \
+    -e "TIMEZONE=Europe/Berlin" \
+    joramk/fc26-haproxy:latest
+~~~
+
+### HAProxy container with persistent volumes
+~~~
+docker run -d -p 80:80 -p 443:443 \
+    -v /etc/haproxy:/etc/haproxy:ro \
+    -v /etc/letsencrypt:/etc/letsencrypt \
+    -e "TIMEZONE=Europe/Berlin" \
+    joramk/fc26-haproxy:latest
+~~~
+
+### Docker run on SELinux hosts with all options enabled
+~~~
+docker run -d -p 80:80 -p 443:443 \
     --tmpfs /run --tmpfs /tmp \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -e "TIMEZONE=Europe/Berlin" \
