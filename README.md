@@ -97,6 +97,11 @@ Issue and update certificates manually
     docker exec -ti <container> certbot-issue <domain.tld> <email>
     docker exec -ti <container> certbot-renew
 
+docker ps on successful start
+==
+    CONTAINER ID        IMAGE                         COMMAND                  CREATED              STATUS                        PORTS               NAMES
+    c2c6dc6cd27f        joramk/fc26-haproxy:latest   "/docker-entrypoin..."   31 seconds ago      Up 30 seconds (healthy)   80/tcp, 443/tcp     fc26_haproxy
+
 Found a bug?
 ==
 Please report issues on GitHub: https://github.com/joramk/fc26-haproxy/issues
