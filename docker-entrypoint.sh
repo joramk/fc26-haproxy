@@ -13,7 +13,7 @@ setup() {
                 ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
         fi
 
-	if [ ! -z "$HAPROXY_OCSP" ] && [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
+	if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" ] && [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
 		echo "0 5 * * * root /usr/local/sbin/certbot-ocsp >/dev/null" >/etc/cron.d/certbot-ocsp
 	fi
 

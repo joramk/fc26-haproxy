@@ -25,7 +25,7 @@ docker run -ti -p 80:80 -p 443:443 \
     -e "TIMEZONE=Europe/Berlin" \
     -e "SELFUPDATE=1" \
     -e "HAPROXY_LETSENCRYPT=1" \
-    -e "HAPROXY_OCSP=1" \
+    -e "HAPROXY_LETSENCRYPT_OCSP=1" \
     -e "LETSENCRYPT_DOMAIN_1=www.example.org,someone@example.org"
     -e "LETSENCRYPT_DOMAIN_2=www.example.com,anyone@example.com"
     joramk/fc26-haproxy:latest
@@ -39,7 +39,7 @@ Docker swarm
         -e "TIMEZONE=Europe/Berlin" \
         -e "SELFUPDATE=1" \
         -e "HAPROXY_LETSENCRYPT=1" \
-        -e "HAPROXY_OCSP=1" \
+        -e "HAPROXY_LETSENCRYPT_OCSP=1" \
         -e "LETSENCRYPT_DOMAIN_1=www.example.org,someone@example.org"
         -e "LETSENCRYPT_DOMAIN_2=www.example.com,anyone@example.com"
         joramk/fc26-haproxy:latest
@@ -61,7 +61,7 @@ docker run -d \
     -e "TIMEZONE=Europe/Berlin" \
     -e "SELFUPDATE=1" \
     -e "HAPROXY_LETSENCRYPT=1" \
-    -e "HAPROXY_OCSP=1" \
+    -e "HAPROXY_LETSENCRYPT_OCSP=1" \
     -e "LETSENCRYPT_DOMAIN_1=jira.lonet.org,joramk@gmail.com"
     -e "LETSENCRYPT_DOMAIN_2=confluence.lonet.org,joramk@gmail.com"
     -e "LETSENCRYPT_DOMAIN_3=git.lonet.org,joramk@gmail.com"
