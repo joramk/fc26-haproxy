@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+- docker pull joramk/fc26-haproxy:latest
+- docker run -d joramk/fc26-haproxy:latest
+- docker ps
+
+script:
+- docker ps -a
