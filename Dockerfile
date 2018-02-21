@@ -21,7 +21,7 @@ RUN {	systemctl enable haproxy crond; \
 	systemctl disable auditd; \
 	touch /firstrun; \
 	chmod +rx /docker-entrypoint.sh; \
-	chmod 700 /usr/local/sbin/certbot-{issue,ocsp,renew}; \
+	chmod 700 /usr/local/sbin/certbot-*; \
 	mkdir -p /etc/letsencrypt/live; \
 }
 
