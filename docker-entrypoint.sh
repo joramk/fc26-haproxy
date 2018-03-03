@@ -1,4 +1,5 @@
 #!/bin/bash
+unset IFS
 set -eo pipefail
 shopt -s nullglob
 
@@ -9,8 +10,12 @@ setup() {
                 yum update -y
         fi
 
-        if [ ! -z "$TIMEZONE" ]; then
-                ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+	if [ ! -z "$TZ" ]; then
+		TIMEZONE="$TZ"
+	fi
+
+        if [ ! -z "$TIMEZONE" ] && [ -e "/usr/share/zoneinfo/$TIMEZONE" ]; then
+                ln -sf "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
         fi
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" ] && [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
@@ -19,7 +24,6 @@ setup() {
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
 		echo "45 4 * * * root /usr/local/sbin/certbot-renew >/dev/null" >/etc/cron.d/certbot-renew
-		unset IFS
 		domains=()
 		for var in $(compgen -e); do
 		        if [[ "$var" =~ LETSENCRYPT_DOMAIN_.* ]]; then
