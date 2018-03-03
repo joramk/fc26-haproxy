@@ -11,7 +11,7 @@ for OCSP_DOMAIN in $LE_PATH/*; do
   -verify_other ${OCSP_DOMAIN}/chain.pem \
   -cert ${OCSP_DOMAIN}/cert.pem \
   -url http://ocsp.int-x3.letsencrypt.org/4 \
-  -header "HOST=ocsp.int-x3.letsencrypt.org"
+  -header "HOST=ocsp.int-x3.letsencrypt.org" 2>/dev/null
  echo "set ssl ocsp-response $(/usr/bin/base64 -w0 ${OCSP_DOMAIN}/cert.ocsp)" | /usr/bin/socat stdio /var/run/haproxy.admin
 done
 
