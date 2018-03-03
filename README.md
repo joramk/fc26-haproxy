@@ -34,6 +34,8 @@ frontend unsecured
 
 backend certbot
     server standalone 127.0.0.1:8888
+    maxconn 8
+    retries 128
 ~~~
 
 ## First run configuration
