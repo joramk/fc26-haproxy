@@ -10,8 +10,12 @@ setup() {
                 yum update -y
         fi
 
-        if [ ! -z "$TIMEZONE" ]; then
-                ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+	if [ ! -z "$TZ" ]; then
+		TIMEZONE="$TZ"
+	fi
+
+        if [ ! -z "$TIMEZONE" ] && [ -e "/usr/share/zoneinfo/$TIMEZONE" ]; then
+                ln -sf "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
         fi
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" ] && [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
