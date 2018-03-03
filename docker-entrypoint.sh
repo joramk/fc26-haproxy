@@ -14,11 +14,11 @@ setup() {
         fi
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" ] && [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
-		echo "0 5 * * * root /usr/local/sbin/certbot-ocsp >/dev/null" >/etc/cron.d/certbot-ocsp
+		echo "15 5 * * * root /usr/local/sbin/certbot-ocsp >/dev/null" >/etc/cron.d/certbot-ocsp
 	fi
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
-		echo "45 4 * * 0 root /usr/local/sbin/certbot-renew >/dev/null" >/etc/cron.d/certbot-renew
+		echo "45 4 * * * root /usr/local/sbin/certbot-renew >/dev/null" >/etc/cron.d/certbot-renew
 		unset IFS
 		domains=()
 		for var in $(compgen -e); do
