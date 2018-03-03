@@ -15,7 +15,7 @@ RUN {   yum update -y; \
 }
 
 COPY    docker-entrypoint.sh /
-COPY    certbot-* /usr/local/sbin/
+COPY    scripts/certbot-* /usr/local/sbin/
 
 RUN {	systemctl enable haproxy crond; \
 	systemctl disable auditd; \
