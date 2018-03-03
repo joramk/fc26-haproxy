@@ -1,35 +1,74 @@
-Fedora 26 HAProxy docker image with Let´s Encrypt [![Build Status](https://travis-ci.org/joramk/fc26-haproxy.svg?branch=haproxy-1.7.9)](https://travis-ci.org/joramk/fc26-haproxy)
-===
+# Fedora 26 HAProxy docker image with Let´s Encrypt [![Build Status](https://travis-ci.org/joramk/fc26-haproxy.svg?branch=haproxy-1.7.9)](https://travis-ci.org/joramk/fc26-haproxy)
 A Fedora 26 based HAProxy docker image with Let´s Encrypt support in different version flavours.
 
-Tags
-==
+## Tags
 Tag | Description
 ---|---
 latest | Installs HAProxy v1.7.9 (stable)
 **1.7.9** | **Installs HAProxy v1.7.9 (stable)**   
 1.7.3 | Installs HAProxy v1.7.3 (old)   
 
-Features
-==
-* Self update through Fedora package management
-* Latest Fedora with full systemd
-* Integrated LetsEncrypt with automatic issueing and update of certificates 
+## Features
+* Automatich self update through the Fedora package management
+* Latest Fedora 26 base system with full systemd support
+* Integrated LetsEncrypt Certbot with automatic certificate issues and updates 
 
-Environment variables
-===
+### Environment variables
 Variable | Description
 ---|---
-TIMEZONE | Sets the container timezone, i.e. `-e TIMEZONE=Europe/Berlin` _string_
+TIMEZONE | Sets the container timezone, i.e. `-e "TIMEZONE=Europe/Berlin"` _string_
 SELFUPDATE | Activates the Fedora base system package selfupdate _boolean_
 HAPROXY_LETSENCRYPT | Activates the LetsEncrypt components and installs the renewal cronjob _boolean_
 HAPROXY_LETSENCRYPT_OCSP | Activates OCSP stapling and the daily update cronjob _boolean_
-LETSENCRYPT\_DOMAIN\_\* | Issues a certificate from LetsEncrypt, i.e. `-e LETSENCRYPT_DOMAIN_1=www.example.org,mail@example.org`
+LETSENCRYPT\_DOMAIN\_\* | Issues a certificate from LetsEncrypt, i.e. `-e "LETSENCRYPT_DOMAIN_1=www.example.org,mail@example.org"`
 
-General first run configuration
-===
+### Required haproxy.cfg
+The following configuration options are required for the LetsEncrypt scripts and OCSP cronjob.
 ~~~
-docker run -ti -p 80:80 -p 443:443 \
+global
+    stats socket /var/run/haproxy.admin level admin
+
+frontend unsecured
+    acl         acme_redirect path_beg -i /.well-known/acme-challenge/
+    use_backend certbot if acme_redirect
+
+backend certbot
+    server standalone 127.0.0.1:8888
+    maxconn 8
+    retries 128
+~~~
+
+## First run configuration
+You can start a container in several ways. You should have a persistent read-only volume for `/etc/haproxy` and a persistent writable volume for `/etc/letsencrypt` when using LetsEncrypt certificates. Here are some examples including my personal run configuration.
+
+### Docker run - Quickstart
+~~~
+docker run joramk/fc26-haproxy:latest
+~~~
+
+### Docker run
+~~~
+docker run -d -p 80:80 -p 443:443 \
+    --tmpfs /run --tmpfs /tmp \
+    -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+    -e "TIMEZONE=Europe/Berlin" \
+    joramk/fc26-haproxy:latest
+~~~
+
+### Docker run with persistent volumes
+~~~
+docker run -d -p 80:80 -p 443:443 \
+    --tmpfs /run --tmpfs /tmp \
+    -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+    -v /etc/haproxy:/etc/haproxy:ro \
+    -v /etc/letsencrypt:/etc/letsencrypt \
+    -e "TIMEZONE=Europe/Berlin" \
+    joramk/fc26-haproxy:latest
+~~~
+
+### Docker run with all options enabled
+~~~
+docker run -d -p 80:80 -p 443:443 \
     --tmpfs /run --tmpfs /tmp \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -e "TIMEZONE=Europe/Berlin" \
@@ -41,21 +80,21 @@ docker run -ti -p 80:80 -p 443:443 \
     joramk/fc26-haproxy:latest
 ~~~
 
-Docker swarm
-==
-    docker service create -d --log-driver=journald -p 80:80 -p 443:443 --replicas 2 \
-        --mount type=tmpfs,dst=/run --mount type=tmpfs,dst=/tmp \
-        --mount type=bind,src=/sys/fs/cgroup,dst=/sys/fs/cgroup,ro \
-        -e "TIMEZONE=Europe/Berlin" \
-        -e "SELFUPDATE=1" \
-        -e "HAPROXY_LETSENCRYPT=1" \
-        -e "HAPROXY_LETSENCRYPT_OCSP=1" \
-        -e "LETSENCRYPT_DOMAIN_1=www.example.org,someone@example.org"
-        -e "LETSENCRYPT_DOMAIN_2=www.example.com,anyone@example.com"
-        joramk/fc26-haproxy:latest
+### Docker swarm
+~~~
+docker service create -d --log-driver=journald -p 80:80 -p 443:443 --replicas 2 \
+    --mount type=tmpfs,dst=/run --mount type=tmpfs,dst=/tmp \
+    --mount type=bind,src=/sys/fs/cgroup,dst=/sys/fs/cgroup,ro \
+    -e "TIMEZONE=Europe/Berlin" \
+    -e "SELFUPDATE=1" \
+    -e "HAPROXY_LETSENCRYPT=1" \
+    -e "HAPROXY_LETSENCRYPT_OCSP=1" \
+    -e "LETSENCRYPT_DOMAIN_1=www.example.org,someone@example.org"
+    -e "LETSENCRYPT_DOMAIN_2=www.example.com,anyone@example.com"
+    joramk/fc26-haproxy:latest
+~~~
 
-My own configuration
-==
+### Docker run - My personal configuration
 ~~~
 docker run -d \
     --tmpfs /run --tmpfs /tmp \
@@ -78,12 +117,16 @@ docker run -d \
     joramk/fc26-haproxy:latest
 ~~~
 
-Issue and update certificates manually
-==
-    docker exec -ti <container> certbot-issue <domain.tld> <email>
-    docker exec -ti <container> certbot-renew
+## Issue or update certificates manually
+~~~
+docker exec -ti <container> certbot-issue <domain.tld> <email>
+docker exec -ti <container> certbot-renew
+~~~
+## docker ps on successful start
 
-Found a bug?
-==
+    CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS                    PORTS               NAMES
+    c2c6dc6cd27f        joramk/fc26-haproxy:latest   "/docker-entrypoin..."   31 seconds ago      Up 30 seconds (healthy)   80/tcp, 443/tcp     fc26_haproxy
+
+## Found a bug?
 Please report issues on GitHub: https://github.com/joramk/fc26-haproxy/issues
 
