@@ -24,10 +24,6 @@ setup() {
 
 	if [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
 		echo "45 4 * * * root /usr/local/sbin/certbot-renew >/dev/null" >/etc/cron.d/certbot-renew
-<<<<<<< HEAD
-		unset IFS
-=======
->>>>>>> master
 		domains=()
 		for var in $(compgen -e); do
 		        if [[ "$var" =~ LETSENCRYPT_DOMAIN_.* ]]; then
