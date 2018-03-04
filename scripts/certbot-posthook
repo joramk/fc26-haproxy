@@ -1,16 +1,16 @@
 #!/bin/bash
+
+# Create haproxy compatible chained certificate files with private key attached
 for dir in $(ls -d /etc/letsencrypt/live/*); do
         cat $dir/privkey.pem $dir/fullchain.pem > $dir/fullkeychain.pem
 done
 
-# Skip reload and OCSP when container gets initialized
+# Exit now when container still gets initialized
 if [ -e /firstrun ]; then
 	exit 0
 fi
 
-systemctl reload haproxy
-
-if [ ! -z "$HAPROXY_LETSENCRYPT_OCSP" ] && [ ! -z "$HAPROXY_LETSENCRYPT" ]; then
-	sleep 3
-	/usr/local/sbin/certbot-ocsp
+# Reload haproxy now and wait for it if no daily reload is scheduled
+if [ -z "$HAPROXY_DAILY_RELOAD" ]; then
+	systemctl reload haproxy && sleep 3
 fi
